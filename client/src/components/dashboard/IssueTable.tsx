@@ -1,11 +1,10 @@
-import type { ReactElement, ReactNode } from "react";
 import Table, { type Header } from "./Table";
 import Select from "../ui/Select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import { toast } from "react-toastify";
-import Loading from "../ui/Loading";
 import Button from "../ui/Button";
+import { Trash2 } from "lucide-react";
 
 export type TableDataType = {
   _id: string;
@@ -245,11 +244,12 @@ const IssueTable = ({ data }: Props) => {
         return (
           <div className="flex justify-center align-middle w-full">
             <Button
+              Icon={Trash2}
               activeText="Delete"
               disableText="Deleting..."
               isLoading={false}
               onClick={() => _delete(raw._id)}
-              className="bg-red-400 px-7 py-1 text-white rounded-md cursor-pointer hover:bg-red-500"
+              className="bg-red-400 px-4 py-1.5 text-white rounded-md cursor-pointer hover:bg-red-500"
             />
           </div>
         );

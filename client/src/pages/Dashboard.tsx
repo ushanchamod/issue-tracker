@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import Table from "../components/dashboard/Table";
 import TopBar from "../components/dashboard/TopBar";
 import useAxios from "../hooks/useAxios";
 import Loading from "../components/ui/Loading";
-import IssueTable, {
-  type TableDataType,
-} from "../components/dashboard/IssueTable";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import IssueTable from "../components/dashboard/IssueTable";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import FilterSection from "../components/dashboard/FilterSection";
+import Button from "../components/ui/Button";
 
 export type filterType = {
   field: string;
@@ -59,10 +57,28 @@ const Dashboard = () => {
       <TopBar />
 
       <div className="h-full overflow-auto">
-        <div className="p-6 max-w-7xl mx-auto ">
-          <h1 className="text-2xl font-bold mb-4 bg-white px-5 py-5 rounded-sm border border-gray-200 shadow">
-            Issue Tracker
-          </h1>
+        <div className="p-6 max-w-[1500px] mx-auto">
+          <div className="font-bold mb-4 bg-white px-5 py-5 rounded-sm border border-gray-200 shadow w-full">
+            {/* <div className="font-bold mb-4 py-0 rounded-sm  flex justify-between items-center"> */}
+            <div className="flex sm:hidden justify-between items-center">
+              <h1 className="text-2xl">Issue Management</h1>
+              <Button
+                Icon={Plus}
+                className="text-nowrap bg-blue-500 hover:bg-blue-700 text-white p-2.5 rounded-sm font-semibold cursor-pointer flex justify-center"
+                onClick={() => console.log()}
+              />
+            </div>
+
+            <div className="hidden sm:flex justify-between items-center">
+              <h1 className="text-2xl">Issue Management</h1>
+              <Button
+                Icon={Plus}
+                activeText="Add New Issue"
+                className="text-nowrap bg-blue-500 hover:bg-blue-700 text-white p-2.5 rounded-sm font-semibold cursor-pointer flex justify-center"
+                onClick={() => console.log()}
+              />
+            </div>
+          </div>
 
           {/* filter section */}
           <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow mb-4">

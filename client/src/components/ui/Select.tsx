@@ -33,7 +33,7 @@ const Select = <T extends string | number>({
   const backgroundColor = selectedOption?.color || undefined;
 
   return (
-    <div>
+    <div className="w-full">
       {label && (
         <label htmlFor={id} className="font-semibold mb-0.5 text-gray-800">
           {label}

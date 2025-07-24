@@ -1,11 +1,14 @@
+import type { LucideProps } from "lucide-react";
+
 type buttonProps = {
-  activeText: string;
+  activeText?: string;
   disableText?: string;
   onClick?: () => void;
   type?: "button" | "submit";
   isLoading?: boolean;
   disabled?: boolean;
   className?: string;
+  Icon?: React.ForwardRefExoticComponent<Omit<LucideProps, "ref">>;
 };
 
 const Button = ({
@@ -16,6 +19,7 @@ const Button = ({
   isLoading = false,
   disabled = false,
   className,
+  Icon,
 }: buttonProps) => {
   return (
     <button
@@ -26,8 +30,16 @@ const Button = ({
       }
       onClick={onClick}
       disabled={disabled}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+      }}
     >
-      {!isLoading ? activeText : disableText}
+      {Icon && <Icon size={20} />}
+      {(activeText || disableText) && (
+        <span>{!isLoading ? activeText : disableText}</span>
+      )}
     </button>
   );
 };

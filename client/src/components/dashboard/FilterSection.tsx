@@ -1,7 +1,8 @@
-import { Funnel, Search } from "lucide-react";
+import { Funnel, Paintbrush } from "lucide-react";
 import Select from "../ui/Select";
 import type { filterType } from "../../pages/Dashboard";
 import SearchComponent from "./SearchComponent";
+import Button from "../ui/Button";
 
 type Props = {
   filter: filterType;
@@ -20,10 +21,10 @@ const FilterSection = ({ filter, setFilter }: Props) => {
         </h1>
       </div>
 
-      <div className="flex justify-between items-end gap-5">
+      <div className="flex flex-col lg:flex-row  justify-between items-end gap-2 lg:gap-5">
         <SearchComponent filter={filter} setFilter={setFilter} />
 
-        <div className="flex justify-end items-center gap-2">
+        <div className="flex flex-col lg:flex-row justify-end items-end gap-2 w-full">
           <Select
             label="Severity"
             id="severity-select-filter-section"
@@ -41,7 +42,7 @@ const FilterSection = ({ filter, setFilter }: Props) => {
               { value: "high", label: "High" },
             ]}
             value={filter.severity}
-            className="rounded-md border-2 border-gray-300 bg-white text-black placeholder-gray-400 focus:border-gray-500 focus:ring-0.5 focus:ring-gray-500 focus:outline-none transition-all"
+            className="rounded-md border-2 border-gray-300 bg-white text-black placeholder-gray-400 focus:border-gray-500 focus:ring-0.5 focus:ring-gray-500 focus:outline-none transition-all w-full"
           />
 
           <Select
@@ -61,7 +62,7 @@ const FilterSection = ({ filter, setFilter }: Props) => {
               { value: "high", label: "High" },
             ]}
             value={filter.priority}
-            className="rounded-md border-2 border-gray-300 bg-white text-black placeholder-gray-400 focus:border-gray-500 focus:ring-0.5 focus:ring-gray-500 focus:outline-none transition-all"
+            className="rounded-md border-2 border-gray-300 bg-white text-black placeholder-gray-400 focus:border-gray-500 focus:ring-0.5 focus:ring-gray-500 focus:outline-none transition-all w-full"
           />
 
           <Select
@@ -83,7 +84,22 @@ const FilterSection = ({ filter, setFilter }: Props) => {
               { value: "closed", label: "closed" },
             ]}
             value={filter.status}
-            className="rounded-md border-2 border-gray-300 bg-white text-black placeholder-gray-400 focus:border-gray-500 focus:ring-0.5 focus:ring-gray-500 focus:outline-none transition-all"
+            className="rounded-md border-2 border-gray-300 bg-white text-black placeholder-gray-400 focus:border-gray-500 focus:ring-0.5 focus:ring-gray-500 focus:outline-none transition-all w-full"
+          />
+
+          <Button
+            Icon={Paintbrush}
+            activeText="Clear Filter"
+            className="text-nowrap bg-gray-700 hover:bg-black text-white p-2.5 rounded-sm font-semibold cursor-pointer w-full flex justify-center"
+            onClick={() =>
+              setFilter({
+                field: "",
+                fieldDebounceValue: "",
+                severity: "",
+                priority: "",
+                status: "",
+              })
+            }
           />
         </div>
       </div>
