@@ -17,8 +17,16 @@ export const UserRegister = async (req: Request, res: Response) => {
     $or: [{ username }, { email }],
   });
 
-  if (existingUser) {
-    return sendError(res, "Username or email already exists", 400);
+  const existingUsername = await UserModel.findOne({ username });
+
+  if (existingUsername) {
+    return sendError(res, "Username already exists", 400);
+  }
+
+  const existingEmail = await UserModel.findOne({ email });
+
+  if (existingEmail) {
+    return sendError(res, "Email already exists", 400);
   }
 
   try {
@@ -76,6 +84,13 @@ export const UserLogin = async (req: Request, res: Response) => {
       }
     );
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: config.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 3600000, // 1 hour
+    });
+
     return sendSuccess(res, {
       message: "User logged in successfully",
       data: {
@@ -83,7 +98,6 @@ export const UserLogin = async (req: Request, res: Response) => {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        token,
       },
     });
   } catch (error) {
