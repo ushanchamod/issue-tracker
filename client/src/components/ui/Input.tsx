@@ -60,9 +60,9 @@ const Input = <T extends FieldValues>({
           className={`w-full px-4 py-3 rounded-lg border ${
             error
               ? "border-red-500 focus:border-red-500"
-              : "border-gray-300 focus:border-blue-500"
+              : "border-gray-300 focus:border-gray-500"
           } focus:outline-none focus:ring-2 ${
-            error ? "focus:ring-red-200" : "focus:ring-blue-200"
+            error ? "focus:ring-red-200" : "focus:ring-gray-200"
           } transition-all`}
         />
 

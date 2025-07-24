@@ -163,18 +163,35 @@ export const GetUserIssues = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const { page } = req.query;
+  const { page, field, severity, priority, status } = req.query;
 
   try {
+    const filter: any = {
+      createdBy: req.user.id,
+    };
+
+    // Add text search filter if "field" exists
+    if (field && typeof field === "string") {
+      filter.$or = [
+        { title: { $regex: field, $options: "i" } },
+        { description: { $regex: field, $options: "i" } },
+      ];
+    }
+
+    // Optional dropdown filters
+    if (severity) filter.severity = severity;
+    if (priority) filter.priority = priority;
+    if (status) filter.status = status;
+
+    const pageSize = config.resultPageSize || 10;
+
     if (page) {
       const pageNumber = parseInt(page as string, 10);
-      const pageSize = config.resultPageSize || 10;
 
       if (isNaN(pageNumber) || pageNumber < 1) {
         return sendError(res, "Invalid page number", 400);
       }
 
-      const filter = { createdBy: req.user.id };
       const totalCount = await IssueModel.countDocuments(filter);
       const pageCount = Math.ceil(totalCount / pageSize);
       const skip = (pageNumber - 1) * pageSize;
@@ -184,19 +201,7 @@ export const GetUserIssues = async (
         .limit(pageSize)
         .sort({ createdAt: -1 });
 
-      // return sendSuccess(
-      //   res,
-      //   {
-      //     issues,
-      //     page: pageNumber,
-      //     pageSize,
-      //     pageCount,
-      //     totalCount,
-      //   },
-      //   "Issues retrieved successfully"
-      // );
-
-      const _responds = {
+      const response = {
         totalCount,
         pageCount,
         pageSize,
@@ -204,15 +209,15 @@ export const GetUserIssues = async (
         issues,
       };
 
-      return sendSuccess(res, _responds, "Issues retrieved successfully");
+      return sendSuccess(res, response, "Issues retrieved successfully");
     }
 
-    const issues = await IssueModel.find({
-      createdBy: req.user.id,
-    });
+    // If page is not defined → return all filtered issues
+    const issues = await IssueModel.find(filter).sort({ createdAt: -1 });
 
     return sendSuccess(res, issues, "Issues retrieved successfully");
   } catch (error) {
-    return sendError(res, "Failed to retrieve issues", 500, null);
+    console.error("Error retrieving issues:", error);
+    return sendError(res, "Failed to retrieve issues", 500);
   }
 };

@@ -10,21 +10,43 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import FilterSection from "../components/dashboard/FilterSection";
 
+export type filterType = {
+  field: string;
+  severity: string;
+  priority: string;
+  status: string;
+  fieldDebounceValue: string;
+};
+
 const Dashboard = () => {
   const { fetchData } = useAxios();
-
   const [page, setPage] = useState(1);
+
+  const [filter, setFilter] = useState<filterType>({
+    field: "",
+    fieldDebounceValue: "",
+    severity: "",
+    priority: "",
+    status: "",
+  });
 
   const fetchIssue = async (page: number) => {
     const response = await fetchData({
-      url: `/user/my-issues?page=${page}`,
+      url: `/user/my-issues?page=${page}&field=${filter.fieldDebounceValue}&severity=${filter.severity}&priority=${filter.priority}&status=${filter.status}`,
     });
 
     return response.data;
   };
 
   const { isFetching, isError, data } = useQuery({
-    queryKey: ["dashboard-issue", page],
+    queryKey: [
+      "dashboard-issue",
+      page,
+      filter.fieldDebounceValue,
+      filter.severity,
+      filter.priority,
+      filter.status,
+    ],
     queryFn: () => fetchIssue(page),
   });
 
@@ -44,7 +66,7 @@ const Dashboard = () => {
 
           {/* filter section */}
           <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow mb-4">
-            <FilterSection />
+            <FilterSection filter={filter} setFilter={setFilter} />
           </div>
 
           <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow">
