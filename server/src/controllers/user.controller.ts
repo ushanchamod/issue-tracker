@@ -163,7 +163,50 @@ export const GetUserIssues = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
+  const { page } = req.query;
+
   try {
+    if (page) {
+      const pageNumber = parseInt(page as string, 10);
+      const pageSize = config.resultPageSize || 10;
+
+      if (isNaN(pageNumber) || pageNumber < 1) {
+        return sendError(res, "Invalid page number", 400);
+      }
+
+      const filter = { createdBy: req.user.id };
+      const totalCount = await IssueModel.countDocuments(filter);
+      const pageCount = Math.ceil(totalCount / pageSize);
+      const skip = (pageNumber - 1) * pageSize;
+
+      const issues = await IssueModel.find(filter)
+        .skip(skip)
+        .limit(pageSize)
+        .sort({ createdAt: -1 });
+
+      // return sendSuccess(
+      //   res,
+      //   {
+      //     issues,
+      //     page: pageNumber,
+      //     pageSize,
+      //     pageCount,
+      //     totalCount,
+      //   },
+      //   "Issues retrieved successfully"
+      // );
+
+      const _responds = {
+        totalCount,
+        pageCount,
+        pageSize,
+        page: pageNumber,
+        issues,
+      };
+
+      return sendSuccess(res, _responds, "Issues retrieved successfully");
+    }
+
     const issues = await IssueModel.find({
       createdBy: req.user.id,
     });

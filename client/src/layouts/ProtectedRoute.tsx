@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuthStore";
+import Loading from "../components/ui/Loading";
 
 export default function ProtectedRoute() {
   const { user, loading } = useAuthStore();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
 
   if (user) {
     return <Outlet />;

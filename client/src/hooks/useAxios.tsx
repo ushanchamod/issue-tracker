@@ -7,7 +7,7 @@ const instance = axios.create({
 
 type AxiosRequestConfig = {
   url: string;
-  method?: "get" | "post" | "put" | "delete";
+  method?: "get" | "post" | "put" | "delete" | "patch";
   data?: any;
   params?: Record<string, any>;
   headers?: Record<string, string>;
@@ -30,8 +30,11 @@ const useAxios = () => {
         headers,
       });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.error("API call failed:", error);
+      if (error.response.status === 403) {
+        location.reload();
+      }
       throw error;
     }
   };

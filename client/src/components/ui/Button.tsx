@@ -4,7 +4,7 @@ type buttonProps = {
   onClick?: () => void;
   type?: "button" | "submit";
   isLoading?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -14,7 +14,7 @@ const Button = ({
   onClick,
   type = "button",
   isLoading = false,
-  disabled,
+  disabled = false,
   className,
 }: buttonProps) => {
   return (

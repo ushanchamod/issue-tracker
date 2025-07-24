@@ -7,7 +7,6 @@ import {
   loginSchema,
   type LoginFormInputs,
 } from "../utility/zod-schema/loginSchema";
-import { useState } from "react";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { Link } from "react-router-dom";
@@ -16,7 +15,6 @@ import { motion } from "framer-motion";
 const Login = () => {
   const { fetchData } = useAxios();
   const setUser = useAuthStore((state) => state.setUser);
-  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,

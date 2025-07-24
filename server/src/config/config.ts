@@ -5,6 +5,7 @@ dotenv.config();
 interface Config {
   port: number;
   nodeEnv: string;
+  resultPageSize: number;
   databaseUrl: string;
   JWT_SECRET?: string;
   NODE_ENV?: string;
@@ -16,6 +17,7 @@ const config: Config = {
   nodeEnv: process.env.NODE_ENV || "development",
   databaseUrl: process.env.DATABASE_URL || "",
   JWT_SECRET: process.env.JWT_SECRET || "",
+  resultPageSize: 10,
   NODE_ENV: process.env.NODE_ENV || "development",
   CORS_ORIGIN: process.env.CORS_ORIGIN || "http://localhost:5173",
 };
