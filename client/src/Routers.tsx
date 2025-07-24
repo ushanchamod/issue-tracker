@@ -3,26 +3,52 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import { Suspense, lazy } from "react";
 import { AuthInitializer } from "./AuthInitializer";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import GuestRoute from "./layouts/GuestRoute";
+import Loading from "./components/ui/Loading";
+
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <ProtectedRoute />,
-    children: [{ index: true, element: <Dashboard /> }],
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Dashboard />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: "/auth",
     element: <GuestRoute />,
     children: [
       { index: true, element: <Navigate to="login" replace /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
+      {
+        path: "login",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Login />
+          </Suspense>
+        ),
+      },
+      {
+        path: "register",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Register />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);

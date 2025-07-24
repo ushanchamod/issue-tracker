@@ -26,7 +26,7 @@ const Button = ({
       type={type}
       className={
         className ||
-        `w-full py-3 px-4 rounded-md font-medium text-white bg-gray-900 hover:bg-gray-800 cursor-pointer`
+        `w-full py-3 px-4 rounded-md justify-center font-medium text-white bg-gray-900 hover:bg-gray-800 cursor-pointer`
       }
       onClick={onClick}
       disabled={disabled}

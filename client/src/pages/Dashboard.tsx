@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import FilterSection from "../components/dashboard/FilterSection";
 import Button from "../components/ui/Button";
+import CreateIssue from "../components/dashboard/CreateIssue";
 
 export type filterType = {
   field: string;
@@ -19,6 +20,7 @@ export type filterType = {
 const Dashboard = () => {
   const { fetchData } = useAxios();
   const [page, setPage] = useState(1);
+  const [addNewPopup, setAddNewPopup] = useState(false);
 
   const [filter, setFilter] = useState<filterType>({
     field: "",
@@ -52,20 +54,19 @@ const Dashboard = () => {
   if (isError) return <p>Error</p>;
 
   return (
-    <div className="relative w-full h-full max-h-[100vh] bg-gray-100 overflow-auto pt-12">
-      {/* top bar section */}
+    <div className="relative w-full h-full max-h-[100vh] bg-gray-100 overflow-auto">
       <TopBar />
+      {addNewPopup && <CreateIssue setAddNewPopup={setAddNewPopup} />}
 
-      <div className="h-full overflow-auto">
+      <div className="h-full overflow-auto mt-12">
         <div className="p-6 max-w-[1500px] mx-auto">
           <div className="font-bold mb-4 bg-white px-5 py-5 rounded-sm border border-gray-200 shadow w-full">
-            {/* <div className="font-bold mb-4 py-0 rounded-sm  flex justify-between items-center"> */}
             <div className="flex sm:hidden justify-between items-center">
               <h1 className="text-2xl">Issue Management</h1>
               <Button
                 Icon={Plus}
                 className="text-nowrap bg-blue-500 hover:bg-blue-700 text-white p-2.5 rounded-sm font-semibold cursor-pointer flex justify-center"
-                onClick={() => console.log()}
+                onClick={() => setAddNewPopup(true)}
               />
             </div>
 
@@ -75,7 +76,7 @@ const Dashboard = () => {
                 Icon={Plus}
                 activeText="Add New Issue"
                 className="text-nowrap bg-blue-500 hover:bg-blue-700 text-white p-2.5 rounded-sm font-semibold cursor-pointer flex justify-center"
-                onClick={() => console.log()}
+                onClick={() => setAddNewPopup(true)}
               />
             </div>
           </div>
@@ -85,7 +86,12 @@ const Dashboard = () => {
             <FilterSection filter={filter} setFilter={setFilter} />
           </div>
 
-          <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow">
+          <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow relative ">
+            {isFetching && (
+              <div className="absolute w-full h-full top-0 left-0 z-2">
+                <Loading />
+              </div>
+            )}
             <IssueTable data={data?.issues || []} />
           </div>
 
@@ -111,8 +117,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {isFetching && <Loading />}
     </div>
   );
 };
