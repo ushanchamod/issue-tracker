@@ -4,6 +4,7 @@ type Option<T> = {
   value: T;
   label: string;
   color?: string;
+  textColor?: string;
 };
 
 type Props<T> = {
@@ -31,6 +32,7 @@ const Select = <T extends string | number>({
 }: Props<T>) => {
   const selectedOption = options.find((o) => String(o.value) === String(value));
   const backgroundColor = selectedOption?.color || undefined;
+  const textColor = selectedOption?.textColor || undefined;
 
   return (
     <div className="w-full">
@@ -48,7 +50,7 @@ const Select = <T extends string | number>({
           disabled={disabled}
           className={`
           block w-full px-4 py-2 pr-8
-          text-gray-900 bg-white  rounded-sm
+          text-gray-900 bg-white  
           focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500
           transition duration-150 ease-in-out
           appearance-none
@@ -56,6 +58,7 @@ const Select = <T extends string | number>({
         `}
           style={{
             backgroundColor: backgroundColor,
+            color: textColor,
           }}
         >
           {placeholder && (

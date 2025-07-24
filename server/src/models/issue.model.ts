@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface IssueType extends Document {
+  issueId: number;
   title: string;
   description: string;
   severity: "low" | "medium" | "high";
@@ -12,6 +13,7 @@ export interface IssueType extends Document {
 }
 
 const IssueSchema: Schema = new Schema<IssueType>({
+  issueId: { type: Number, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   severity: {

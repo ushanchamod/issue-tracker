@@ -105,6 +105,23 @@ export const UserLogin = async (req: Request, res: Response) => {
   }
 };
 
+export const UserLogout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: config.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Pragma", "no-cache");
+
+    return sendSuccess(res, { message: "User logged out successfully" });
+  } catch (error) {
+    return sendError(res, "Failed to log out user", 500);
+  }
+};
+
 export const GetMe = async (req: AuthenticatedRequest, res: Response) => {
   const { username } = req.user;
 

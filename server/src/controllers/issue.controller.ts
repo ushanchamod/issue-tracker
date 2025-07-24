@@ -2,14 +2,17 @@ import { Response } from "express";
 import { sendError, sendSuccess } from "../utils";
 import { AuthenticatedRequest } from "../middlewares";
 import { IssueModel } from "../models";
+import { generateFiveDigitNumber } from "../utils/helper";
 
 export const CreateIssue = async (req: AuthenticatedRequest, res: Response) => {
   const { user } = req;
 
   const { title, description, severity, priority, status } = req.body;
 
+  const id = generateFiveDigitNumber();
   try {
     const newIssue = await IssueModel.create({
+      issueId: id,
       title,
       description,
       severity,

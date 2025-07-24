@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 
 export type TableDataType = {
   _id: string;
+  issueId: number;
   title: string;
   description: string;
   severity: string;
@@ -120,9 +121,14 @@ const IssueTable = ({ data }: Props) => {
 
   const headers: Header[] = [
     {
-      key: "_id",
-      title: "ID",
-      hidden: true,
+      key: "issueId",
+      title: "IssueID",
+      align: "left",
+      bold: 700,
+      width: "200px",
+      element: (raw: TableDataType) => {
+        return <span># {raw.issueId}</span>;
+      },
     },
     {
       key: "title",
@@ -141,7 +147,7 @@ const IssueTable = ({ data }: Props) => {
     {
       key: "severity",
       title: "Severity",
-      align: "left",
+      align: "center",
       bold: 700,
       width: "200px",
       element: (raw: TableDataType) => {
@@ -158,9 +164,24 @@ const IssueTable = ({ data }: Props) => {
               })
             }
             options={[
-              { value: "low", label: "Low", color: "#FFFA8D" },
-              { value: "medium", label: "Medium", color: "#BBFBFF" },
-              { value: "high", label: "High", color: "#FFD8D8" },
+              {
+                value: "low",
+                label: "Low",
+                color: "#FEF9C3", // Tailwind: yellow-100
+                textColor: "#92400E", // Tailwind: yellow-800
+              },
+              {
+                value: "medium",
+                label: "Medium",
+                color: "#CFFAFE", // Tailwind: cyan-100
+                textColor: "#155E75", // Tailwind: cyan-800
+              },
+              {
+                value: "high",
+                label: "High",
+                color: "#FECACA", // Tailwind: red-200
+                textColor: "#991B1B", // Tailwind: red-800
+              },
             ]}
           />
         );
@@ -186,9 +207,24 @@ const IssueTable = ({ data }: Props) => {
               })
             }
             options={[
-              { value: "low", label: "Low", color: "#FFFA8D" },
-              { value: "normal", label: "Normal", color: "#BBFBFF" },
-              { value: "high", label: "High", color: "#FFD8D8" },
+              {
+                value: "low",
+                label: "Low",
+                color: "#DCFCE7", // Tailwind: green-100
+                textColor: "#166534", // Tailwind: green-800
+              },
+              {
+                value: "normal",
+                label: "Normal",
+                color: "#E0F2FE", // Tailwind: blue-100
+                textColor: "#1E3A8A", // Tailwind: blue-800
+              },
+              {
+                value: "high",
+                label: "High",
+                color: "#FECACA", // Tailwind: red-200
+                textColor: "#991B1B", // Tailwind: red-800
+              },
             ]}
           />
         );
@@ -214,11 +250,36 @@ const IssueTable = ({ data }: Props) => {
               })
             }
             options={[
-              { value: "open", label: "Open", color: "#FFFA8D" },
-              { value: "in-progress", label: "In Progress", color: "#BBFBFF" },
-              { value: "testing", label: "Testing", color: "#FFD8D8" },
-              { value: "resolved", label: "Resolved", color: "#FFD8D8" },
-              { value: "closed", label: "closed", color: "#FFD8D8" },
+              {
+                value: "open",
+                label: "Open",
+                color: "#FEF9C3", // Tailwind: yellow-100
+                textColor: "#92400E", // Tailwind: yellow-800
+              },
+              {
+                value: "in-progress",
+                label: "In Progress",
+                color: "#CFFAFE", // Tailwind: cyan-100
+                textColor: "#155E75", // Tailwind: cyan-800
+              },
+              {
+                value: "testing",
+                label: "Testing",
+                color: "#E0E7FF", // Tailwind: indigo-100
+                textColor: "#3730A3", // Tailwind: indigo-800
+              },
+              {
+                value: "resolved",
+                label: "Resolved",
+                color: "#D1FAE5", // Tailwind: green-100
+                textColor: "#065F46", // Tailwind: green-800
+              },
+              {
+                value: "closed",
+                label: "Closed",
+                color: "#F3F4F6", // Tailwind: gray-100
+                textColor: "#374151", // Tailwind: gray-700
+              },
             ]}
           />
         );
@@ -269,8 +330,6 @@ const IssueTable = ({ data }: Props) => {
         firstRowColor="#f8f9fa"
         loading={isPending || _pending}
       />
-
-      {/* {isPending && <Loading />} */}
     </>
   );
 };
