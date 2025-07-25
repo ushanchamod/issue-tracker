@@ -10,6 +10,19 @@ type Props = {
   loading: boolean;
 };
 
+/**
+ * PopUp component renders a modal dialog with a title, close button, and content.
+ * Includes an optional loading overlay with spinner.
+ * Uses Framer Motion for fade and slide-in animation.
+ *
+ * @param {ReactNode} children - The content to display inside the popup.
+ * @param {string} title - The title text displayed at the top of the popup.
+ * @param {(x: boolean) => void} setAddNewPopup - Function to control the popup visibility (called with false to close).
+ * @param {boolean} loading - If true, shows a fullscreen loading overlay inside the popup.
+ *
+ * @returns {JSX.Element} A modal popup component with backdrop, title, close icon, loading state, and scrollable content.
+ */
+
 const PopUp = ({
   children,
   title = "title",

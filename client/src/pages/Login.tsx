@@ -19,6 +19,9 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setError,
+    reset,
+    resetField,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
@@ -37,23 +40,32 @@ const Login = () => {
         },
       });
 
-      setUser(response?.data);
+      console.log("hi", response.data);
+
+      setUser({
+        username: response.data.username,
+      });
+
       toast.success("Login successful", {
         autoClose: 2000,
         position: "bottom-right",
         theme: "colored",
       });
     } catch (error: any) {
-      console.log("Login error:", error);
+      console.log("Login error:", error?.response?.data?.message);
 
-      if (error?.response?.status === 404) {
-        toast.error("Invalid username or password", {
-          autoClose: 2000,
-          position: "bottom-right",
-          theme: "colored",
-        });
+      if (error?.response?.data?.message) {
+        const msg = error?.response?.data?.message;
+
+        if (msg === "User not found") {
+          reset();
+          return setError("username", { message: "username not found" });
+        } else if (msg === "Invalid password") {
+          resetField("password");
+          return setError("password", { message: "Password is wrong" });
+        }
       } else {
-        toast.error("An error occurred during login", {
+        return toast.error("An error occurred during login", {
           autoClose: 2000,
           position: "bottom-right",
           theme: "colored",

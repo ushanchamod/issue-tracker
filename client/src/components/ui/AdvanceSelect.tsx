@@ -26,6 +26,36 @@ type SelectProps<T extends FieldValues> = {
   className?: string;
 };
 
+/**
+ * AdvancedSelect is a reusable and accessible select (dropdown) component
+ * designed to integrate seamlessly with `react-hook-form`.
+ *
+ * ✅ Features:
+ * - Full support for `react-hook-form`'s `register` and `errors`.
+ * - Displays optional label with required asterisk.
+ * - Supports a placeholder and disabled state.
+ * - Shows validation error message with icon.
+ * - Custom dropdown arrow icon styled with Tailwind CSS.
+ * - Fully typed with generics using `FieldValues` and `Path<T>`.
+ *
+ * @template T - Form field values extending `FieldValues` from `react-hook-form`.
+ *
+ * @prop {string} id - Unique identifier for the select input (used for `htmlFor`).
+ * @prop {Path<T>} name - Name/path of the form field (typed with react-hook-form `Path<T>`).
+ * @prop {Object} [label] - Optional label configuration.
+ * @prop {string} [label.content] - Text to display as label.
+ * @prop {string} [label.className] - Optional custom class for the label.
+ * @prop {string} [placeholder] - Optional placeholder text (shown as first disabled option).
+ * @prop {UseFormRegister<T>} register - React Hook Form's `register` function.
+ * @prop {FieldErrors<T>} [errors] - Error object from `useForm`, used to show field-specific error.
+ * @prop {boolean} [required] - Whether the field is required; shows a red asterisk if true.
+ * @prop {Option[]} options - Array of options to render inside the select.
+ * @prop {boolean} [disabled=false] - Disables the select input when true.
+ * @prop {string} [className] - Optional custom classes for the wrapper.
+ *
+ * @returns {JSX.Element} A fully controlled select input with label, validation, and styling.
+ */
+
 const AdvancedSelect = <T extends FieldValues>({
   id,
   name,

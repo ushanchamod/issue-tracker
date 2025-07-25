@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { IssueModel, UserModel } from "../models";
 import config from "../config/config";
 import { AuthenticatedRequest } from "../middlewares";
+import mongoose from "mongoose";
 
 export const UserRegister = async (req: Request, res: Response) => {
   const { username, email, firstName, lastName, password } = <CreateUserDto>(
@@ -187,7 +188,6 @@ export const GetUserIssues = async (
       createdBy: req.user.id,
     };
 
-    // Add text search filter if "field" exists
     if (field && typeof field === "string") {
       filter.$or = [
         { title: { $regex: field, $options: "i" } },
@@ -195,7 +195,6 @@ export const GetUserIssues = async (
       ];
     }
 
-    // Optional dropdown filters
     if (severity) filter.severity = severity;
     if (priority) filter.priority = priority;
     if (status) filter.status = status;
@@ -234,6 +233,48 @@ export const GetUserIssues = async (
 
     return sendSuccess(res, issues, "Issues retrieved successfully");
   } catch (error) {
+    console.error("Error retrieving issues:", error);
+    return sendError(res, "Failed to retrieve issues", 500);
+  }
+};
+
+export const GetMyStatistic = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const user = req.user.id;
+
+  try {
+    const issues = await IssueModel.find({ createdBy: user });
+
+    const openCount = issues.filter((issue) => issue.status === "open").length;
+    const inProgressCount = issues.filter(
+      (issue) => issue.status === "in-progress"
+    ).length;
+    const testCount = issues.filter(
+      (issue) => issue.status === "testing"
+    ).length;
+    const resolvedCount = issues.filter(
+      (issue) => issue.status === "resolved"
+    ).length;
+    const closedCount = issues.filter(
+      (issue) => issue.status === "closed"
+    ).length;
+
+    const totalCount =
+      openCount + inProgressCount + testCount + resolvedCount + closedCount;
+
+    const stack = {
+      total: totalCount,
+      open: openCount,
+      inProgress: inProgressCount,
+      test: testCount,
+      resolved: resolvedCount,
+      closed: closedCount,
+    };
+
+    return sendSuccess(res, stack, "Issues retrieved successfully");
+  } catch (error: any) {
     console.error("Error retrieving issues:", error);
     return sendError(res, "Failed to retrieve issues", 500);
   }

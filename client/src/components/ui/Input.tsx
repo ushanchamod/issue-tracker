@@ -21,6 +21,27 @@ type InputProps<T extends FieldValues> = {
   required?: boolean;
 };
 
+/**
+ * Input component integrates with react-hook-form for form state management.
+ * Supports text, number, email, and password types, including toggleable password visibility.
+ * Displays label, placeholder, validation error messages, and required indicator.
+ *
+ * @template T - The form's field values type extending react-hook-form's FieldValues.
+ *
+ * @param {string} id - Unique identifier for the input element.
+ * @param {Path<T>} name - The name/path of the form field, typed for react-hook-form.
+ * @param {"text" | "number" | "email" | "password"} [type="text"] - The input type.
+ * @param {Object} [label] - Optional label configuration.
+ * @param {string} [label.content] - Text content of the label.
+ * @param {string} [label.className] - Optional custom class for the label.
+ * @param {string} [placeholder] - Placeholder text for the input.
+ * @param {UseFormRegister<T>} register - React Hook Form's register function.
+ * @param {FieldErrors<T>} [errors] - Validation errors object from react-hook-form.
+ * @param {boolean} [required] - Whether the input is required; adds a red asterisk if true.
+ *
+ * @returns {JSX.Element} A styled input field with label, password toggle, and error display.
+ */
+
 const Input = <T extends FieldValues>({
   id,
   name,

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   GetMe,
+  GetMyStatistic,
   GetUserIssues,
   UpdateUser,
   UserLogin,
@@ -20,6 +21,7 @@ router.post("/register", validateData(createUserSchema), UserRegister);
 router.post("/login", validateData(loginUserSchema), UserLogin);
 router.post("/logout", UserLogout);
 router.get("/me", useGuard, GetMe);
+router.get("/statistics", useGuard, GetMyStatistic);
 router.put("/me", useGuard, validateData(updateUserSchema), UpdateUser);
 router.get("/my-issues", useGuard, GetUserIssues);
 

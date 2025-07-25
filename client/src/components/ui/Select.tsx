@@ -19,6 +19,39 @@ type Props<T> = {
   label?: string;
 };
 
+/**
+ * Select component renders a customizable dropdown with optional label and dynamic option styling.
+ *
+ * @template T - Type of option values, restricted to string or number.
+ *
+ * @param {string} name - The name attribute for the select element.
+ * @param {string} id - The id attribute for the select element and associated label.
+ * @param {(e: React.ChangeEvent<HTMLSelectElement>) => void} onChange - Change event handler.
+ * @param {T} value - The currently selected value.
+ * @param {Option<T>[]} options - Array of option objects containing value, label, and optional colors.
+ * @param {string} [className=""] - Additional CSS classes for the select wrapper.
+ * @param {boolean} [disabled=false] - Whether the select element is disabled.
+ * @param {string} [placeholder="Select an option"] - Placeholder text shown as a disabled hidden option.
+ * @param {string} [label] - Optional label text displayed above the select.
+ *
+ * @returns {JSX.Element} A styled select dropdown with optional label and custom option colors.
+ *
+ * @example
+ * ```tsx
+ * <Select
+ *   name="fruit"
+ *   id="fruit-select"
+ *   value={selectedFruit}
+ *   onChange={handleFruitChange}
+ *   options={[
+ *     { value: "apple", label: "Apple", color: "#ff0000", textColor: "#fff" },
+ *     { value: "banana", label: "Banana", color: "#ffff00" },
+ *   ]}
+ *   label="Choose a fruit"
+ * />
+ * ```
+ */
+
 const Select = <T extends string | number>({
   name,
   id,

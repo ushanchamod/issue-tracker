@@ -70,6 +70,7 @@ const CreateIssue = ({ setAddNewPopup }: Props) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["dashboard-issue"] });
+      queryClient.invalidateQueries({ queryKey: ["fetch-statistics"] });
       setAddNewPopup(false);
     },
   });

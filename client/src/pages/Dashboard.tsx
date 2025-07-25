@@ -8,6 +8,8 @@ import { useState } from "react";
 import FilterSection from "../components/dashboard/FilterSection";
 import Button from "../components/ui/Button";
 import CreateIssue from "../components/dashboard/CreateIssue";
+import ErrorPage from "../components/ui/ErrorPage";
+import Statistics from "../components/dashboard/Statistics";
 
 export type filterType = {
   field: string;
@@ -38,7 +40,7 @@ const Dashboard = () => {
     return response.data;
   };
 
-  const { isFetching, isError, data } = useQuery({
+  const { isFetching, isError, data, refetch } = useQuery({
     queryKey: [
       "dashboard-issue",
       page,
@@ -50,8 +52,13 @@ const Dashboard = () => {
     queryFn: () => fetchIssue(page),
   });
 
-  // if (isPending) return <Loading />;
-  if (isError) return <p>Error</p>;
+  if (isError)
+    return (
+      <ErrorPage
+        message="Oops! We encountered an error. Sorry for the inconvenience."
+        retry={refetch}
+      />
+    );
 
   return (
     <div className="relative w-full h-full max-h-[100vh] bg-gray-100 overflow-auto">
@@ -81,6 +88,9 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* stack */}
+          <Statistics />
+
           {/* filter section */}
           <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow mb-4">
             <FilterSection filter={filter} setFilter={setFilter} />
@@ -92,7 +102,7 @@ const Dashboard = () => {
                 <Loading />
               </div>
             )}
-            <IssueTable data={data?.issues || []} />
+            <IssueTable data={data?.issues || []} popup={setAddNewPopup} />
           </div>
 
           <div className="mt-4 text-sm text-gray-500 w-full flex justify-between align-middle h-fit">

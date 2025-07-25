@@ -31,9 +31,10 @@ export type TableHeaderType = {
 
 type Props = {
   data: TableDataType[];
+  popup: (x: boolean) => void;
 };
 
-const IssueTable = ({ data }: Props) => {
+const IssueTable = ({ data, popup }: Props) => {
   const { fetchData } = useAxios();
   const queryClient = useQueryClient();
 
@@ -95,6 +96,7 @@ const IssueTable = ({ data }: Props) => {
     },
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ["dashboard-issue"] });
+      queryClient.invalidateQueries({ queryKey: ["fetch-statistics"] });
     },
   });
 
@@ -116,13 +118,14 @@ const IssueTable = ({ data }: Props) => {
     },
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ["dashboard-issue"] });
+      queryClient.invalidateQueries({ queryKey: ["fetch-statistics"] });
     },
   });
 
   const headers: Header[] = [
     {
       key: "issueId",
-      title: "IssueID",
+      title: "Issue ID",
       align: "left",
       bold: 700,
       width: "200px",
@@ -143,6 +146,16 @@ const IssueTable = ({ data }: Props) => {
       align: "left",
       bold: 700,
       width: "400px",
+    },
+    {
+      key: "createdAt",
+      title: "Created Date",
+      align: "left",
+      bold: 700,
+      width: "200px",
+      element: (raw: TableDataType) => {
+        return new Date(raw.createdAt).toDateString();
+      },
     },
     {
       key: "severity",
@@ -190,7 +203,7 @@ const IssueTable = ({ data }: Props) => {
     {
       key: "priority",
       title: "Priority",
-      align: "left",
+      align: "center",
       bold: 700,
       width: "200px",
       element: (raw: TableDataType) => {
@@ -233,7 +246,7 @@ const IssueTable = ({ data }: Props) => {
     {
       key: "status",
       title: "Status",
-      align: "left",
+      align: "center",
       bold: 700,
       width: "200px",
       element: (raw: TableDataType) => {
@@ -285,16 +298,7 @@ const IssueTable = ({ data }: Props) => {
         );
       },
     },
-    {
-      key: "createdAt",
-      title: "Created Date",
-      align: "left",
-      bold: 700,
-      width: "200px",
-      element: (raw: TableDataType) => {
-        return new Date(raw.createdAt).toDateString();
-      },
-    },
+
     {
       key: "",
       title: "Created Date",
@@ -329,6 +333,7 @@ const IssueTable = ({ data }: Props) => {
         rawHeight="50px"
         firstRowColor="#f8f9fa"
         loading={isPending || _pending}
+        popup={popup}
       />
     </>
   );

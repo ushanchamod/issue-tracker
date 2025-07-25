@@ -11,6 +11,21 @@ type buttonProps = {
   Icon?: React.ForwardRefExoticComponent<Omit<LucideProps, "ref">>;
 };
 
+/**
+ * Button component with optional icon, loading state, and disabled state.
+ *
+ * @param {string} [activeText] - Text to display when the button is active (not loading).
+ * @param {string} [disableText] - Text to display when the button is in loading state.
+ * @param {() => void} [onClick] - Click event handler function.
+ * @param {"button" | "submit"} [type="button"] - Button type attribute.
+ * @param {boolean} [isLoading=false] - If true, shows disableText instead of activeText.
+ * @param {boolean} [disabled=false] - If true, disables the button.
+ * @param {string} [className] - Optional custom CSS classes for styling the button.
+ * @param {React.ForwardRefExoticComponent<Omit<LucideProps, "ref">>} [Icon] - Optional icon component from lucide-react.
+ *
+ * @returns {JSX.Element} A styled button with optional icon and loading text handling.
+ */
+
 const Button = ({
   activeText,
   disableText,

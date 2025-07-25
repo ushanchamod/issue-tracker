@@ -1,6 +1,7 @@
 import React from "react";
 import Loading from "../ui/Loading";
 import Button from "../ui/Button";
+import { Plus } from "lucide-react";
 
 export interface Header {
   key: string;
@@ -23,6 +24,7 @@ interface BasicTableProps {
   rawHeight?: string;
   firstRowColor?: string | null;
   loading?: boolean;
+  popup: (x: boolean) => void;
 }
 
 const Table: React.FC<BasicTableProps> = ({
@@ -35,6 +37,7 @@ const Table: React.FC<BasicTableProps> = ({
   rawHeight,
   firstRowColor = null,
   loading,
+  popup,
 }) => {
   return (
     <>
@@ -107,8 +110,10 @@ const Table: React.FC<BasicTableProps> = ({
 
             <div>
               <Button
-                activeText="Create Issue"
-                className="bg-gray-800 text-white py-2 px-10 rounded-sm font-bold cursor-pointer hover:bg-black"
+                Icon={Plus}
+                activeText="Add New Issue"
+                className="text-nowrap bg-blue-500 hover:bg-blue-700 text-white py-2 px-5 rounded-sm font-bold cursor-pointer "
+                onClick={() => popup(true)}
               />
             </div>
           </div>
