@@ -69,7 +69,7 @@ const Dashboard = () => {
         <div className="p-6 max-w-[1500px] mx-auto">
           <div className="font-bold mb-4 bg-white px-5 py-5 rounded-sm border border-gray-200 shadow w-full">
             <div className="flex sm:hidden justify-between items-center">
-              <h1 className="text-2xl">Issue Management</h1>
+              <h1 className="text-2xl">Dashboard</h1>
               <Button
                 Icon={Plus}
                 className="text-nowrap bg-blue-500 hover:bg-blue-700 text-white p-2.5 rounded-sm font-semibold cursor-pointer flex justify-center"
@@ -78,7 +78,7 @@ const Dashboard = () => {
             </div>
 
             <div className="hidden sm:flex justify-between items-center">
-              <h1 className="text-2xl">Issue Management</h1>
+              <h1 className="text-2xl">Dashboard</h1>
               <Button
                 Icon={Plus}
                 activeText="Add New Issue"

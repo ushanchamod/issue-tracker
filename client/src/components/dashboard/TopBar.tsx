@@ -35,10 +35,8 @@ const TopBar = () => {
 
   return (
     <div className="flex flex-row items-center justify-between p-3 px-7 bg-gray-900 fixed top-0 left-0 w-full z-2">
-      <p className="hidden sm:flex text-white text-lg font-medium">
-        Issue Management
-      </p>
-      <p className="flex sm:hidden text-white text-lg font-medium">IM</p>
+      <p className="hidden sm:flex text-white text-lg font-medium">I Tracker</p>
+      <p className="flex sm:hidden text-white text-lg font-medium">I Tracker</p>
       <div
         className="flex items-center gap-3 cursor-pointer relative"
         onMouseEnter={() => setToggleMenu(true)}
