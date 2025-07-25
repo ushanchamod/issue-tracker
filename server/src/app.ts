@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { errorHandler } from "./middlewares";
 import cookieParser from "cookie-parser";
 import { issueRouter, userRouter } from "./routes";
@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: config.CORS_ORIGIN,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
   })
 );

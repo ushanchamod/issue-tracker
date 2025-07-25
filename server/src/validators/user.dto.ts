@@ -18,7 +18,7 @@ export type CreateUserDto = z.infer<typeof createUserSchema>;
 
 export const loginUserSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(1, "Password required"),
 });
 
 export const updateUserSchema = z.object({
