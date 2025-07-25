@@ -25,6 +25,8 @@ app.use(
   })
 );
 
+app.options("/{*any}", (req: Request, res: Response) => res.status(200).send());
+
 app.use("/api/issue", issueRouter);
 app.use("/api/user", userRouter);
 
