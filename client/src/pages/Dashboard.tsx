@@ -106,7 +106,7 @@ const Dashboard = () => {
           </div>
 
           <div className="mt-4 text-sm text-gray-500 w-full flex justify-between align-middle h-fit">
-            {page} of {data?.pageCount} pages
+            {data?.pageCount > 1 && `${page} of ${data?.pageCount} pages`}
             {data?.pageCount > 1 && (
               <div className="w-fit flex gap-1 mb-10">
                 <ChevronLeft
