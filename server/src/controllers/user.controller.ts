@@ -111,7 +111,7 @@ export const UserLogout = async (req: Request, res: Response) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: config.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: config.NODE_ENV === "production" ? "none" : "lax",
     });
 
     res.setHeader("Cache-Control", "no-store");
