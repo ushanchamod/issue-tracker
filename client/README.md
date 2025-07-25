@@ -1,69 +1,68 @@
-# React + TypeScript + Vite
+# Issue Tracker – Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the Issue Tracker application, built with React, TypeScript, Vite, and Tailwind CSS. It provides a modern, responsive user interface for managing issues, user authentication, and dashboard statistics.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User registration and login
+- Create, view, update, and delete issues
+- Filter and search issues by status, priority, or keywords
+- Dashboard with real-time statistics and charts
+- Protected and guest routes for secure navigation
+- Responsive UI with reusable components
+- State management with Zustand
+- Data fetching and caching with React Query
+- Form validation with Zod and React Hook Form
 
-## Expanding the ESLint configuration
+## Main Pages
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Login** – User authentication
+- **Register** – New user registration
+- **Dashboard** – View, filter, and manage issues; see statistics
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Installation & Setup
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+1. **Install dependencies:**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+   ```bash
+   npm install
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Configure environment variables:**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   - If needed, create a `.env` file in the `client` directory. Example:
+     ```env
+     VITE_API_URL=http://localhost:3000/api
+     ```
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   The app will be available at [http://localhost:5173](http://localhost:5173) by default.
+
+4. **Build for production:**
+
+   ```bash
+   npm run build
+   ```
+
+5. **Preview the production build:**
+   ```bash
+   npm run preview
+   ```
+
+## Tech Stack
+
+- **React** & **TypeScript** – UI and type safety
+- **Vite** – Fast development and build tool
+- **Tailwind CSS** – Utility-first CSS framework
+- **Zustand** – State management
+- **React Query** – Data fetching and caching
+- **React Hook Form** & **Zod** – Form management and validation
+
+---
+
+For API details and backend setup, see the main project README and the `server/README.md`.
