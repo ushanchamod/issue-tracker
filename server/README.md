@@ -15,26 +15,88 @@ This is the backend API for the Issue Tracker application. It provides RESTful e
 
 All routes are prefixed with `/api`.
 
-### User Routes (`/api/user`)
+### User Endpoints (`/api/user`)
 
-| Method | Endpoint      | Description                                |
-| ------ | ------------- | ------------------------------------------ |
-| POST   | `/register`   | Register a new user                        |
-| POST   | `/login`      | Log in a user and receive a JWT cookie     |
-| POST   | `/logout`     | Log out the current user                   |
-| GET    | `/me`         | Get the current user's profile             |
-| PUT    | `/me`         | Update the current user's profile          |
-| GET    | `/my-issues`  | Get all issues created by the current user |
-| GET    | `/statistics` | Get statistics for the current user        |
+| Method | Endpoint     | Description                                                                                                           | Example Request Body                                                                                                                                                               |
+| ------ | ------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/register`  | Register a new user                                                                                                   | `{ "username": "uxsssshan124", "email": "ushsaassn124@example.com", "firstName": "Ushan", "lastName": "Chamod", "password": "SecurePass123", "confirmPassword": "SecurePass123" }` |
+| POST   | `/login`     | Log in a user                                                                                                         | `{ "username": "uxsssshan124", "password": "SecurePass123" }`                                                                                                                      |
+| POST   | `/logout`    | Log out the current user                                                                                              | -                                                                                                                                                                                  |
+| GET    | `/me`        | Get the current user's profile                                                                                        | -                                                                                                                                                                                  |
+| PUT    | `/me`        | Update the current user's profile                                                                                     | `{ "firstName": "USHAN", "lastName": "AKILA", "email": "usha@gmail.com" }`                                                                                                         |
+| GET    | `/my-issues` | Get all issues created by the current user (supports query params: `field`, `severity`, `priority`, `status`, `page`) | -                                                                                                                                                                                  |
 
-### Issue Routes (`/api/issue`)
+### Issue Endpoints (`/api/issue`)
 
-| Method | Endpoint    | Description                                |
-| ------ | ----------- | ------------------------------------------ |
-| POST   | `/`         | Create a new issue (authenticated)         |
-| GET    | `/:issueID` | Get a specific issue by ID (authenticated) |
-| PATCH  | `/:issueID` | Update an issue by ID (authenticated)      |
-| DELETE | `/:issueID` | Delete an issue by ID (authenticated)      |
+| Method | Endpoint | Description                | Example Request Body                                                                                                                                                    |
+| ------ | -------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/`      | Create a new issue         | `{ "title": "Login page crash", "description": "App crashes when user clicks login with empty fields." }`                                                               |
+| PATCH  | `/:id`   | Update an issue by ID      | `{ "title": "Login page crash", "description": "App crashes when user clicks login with empty fields.", "severity": "high", "priority": "high", "status": "resolved" }` |
+| DELETE | `/:id`   | Delete an issue by ID      | -                                                                                                                                                                       |
+| GET    | `/:id`   | Get a specific issue by ID | -                                                                                                                                                                       |
+
+#### Example Usage
+
+**Register a User**
+
+```http
+POST /api/user/register
+Content-Type: application/json
+
+{
+  "username": "uxsssshan124",
+  "email": "ushsaassn124@example.com",
+  "firstName": "Ushan",
+  "lastName": "Chamod",
+  "password": "SecurePass123",
+  "confirmPassword": "SecurePass123"
+}
+```
+
+**Login**
+
+```http
+POST /api/user/login
+Content-Type: application/json
+
+{
+  "username": "uxsssshan124",
+  "password": "SecurePass123"
+}
+```
+
+**Create Issue**
+
+```http
+POST /api/issue
+Content-Type: application/json
+
+{
+  "title": "Login page crash",
+  "description": "App crashes when user clicks login with empty fields."
+}
+```
+
+**Update Issue**
+
+```http
+PATCH /api/issue/:id
+Content-Type: application/json
+
+{
+  "title": "Login page crash",
+  "description": "App crashes when user clicks login with empty fields.",
+  "severity": "high",
+  "priority": "high",
+  "status": "resolved"
+}
+```
+
+**Get My Issues (with filters)**
+
+```http
+GET /api/user/my-issues?field=&severity=&priority=&status=&page=1
+```
 
 ## Setup & Development
 
