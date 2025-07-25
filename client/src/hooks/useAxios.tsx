@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
@@ -32,9 +32,6 @@ const useAxios = () => {
       return response.data;
     } catch (error: any) {
       console.error("API call failed:", error);
-      if (error.response.status === 403) {
-        location.reload();
-      }
       throw error;
     }
   };
