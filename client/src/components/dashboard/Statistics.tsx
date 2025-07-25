@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
+import Loading from "../ui/Loading";
 
 type StackCardProps = {
   label: string;
@@ -75,11 +76,12 @@ const Statistics = () => {
     { label: "Closed", key: "closed", color: "#6B7280" },
   ];
 
-  if (isPending) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-5 relative">
+      {isPending && <Loading size={20} />}
+
       <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {statCards.map(({ label, key, color }) => (
           <StackCard
