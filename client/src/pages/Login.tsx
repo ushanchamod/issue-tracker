@@ -40,37 +40,34 @@ const Login = () => {
         },
       });
 
-      console.log("hi", response.data);
-
-      setUser({
-        username: response.data.username,
-      });
-
       toast.success("Login successful", {
         autoClose: 2000,
         position: "bottom-right",
         theme: "colored",
       });
+
+      setUser({
+        username: response.data.data.username,
+      });
     } catch (error: any) {
-      console.log("Login error:", error?.response?.data?.message);
+      const msg =
+        error?.response?.data?.message?.toLowerCase() ?? "unknown error";
 
-      if (error?.response?.data?.message) {
-        const msg = error?.response?.data?.message;
+      console.error("Login error:", msg);
 
-        if (msg === "User not found") {
-          reset();
-          return setError("username", { message: "username not found" });
-        } else if (msg === "Invalid password") {
-          resetField("password");
-          return setError("password", { message: "Password is wrong" });
-        }
-      } else {
-        return toast.error("An error occurred during login", {
-          autoClose: 2000,
-          position: "bottom-right",
-          theme: "colored",
-        });
+      if (msg.includes("user not found")) {
+        reset();
+        return setError("username", { message: "Username not found" });
+      } else if (msg.includes("invalid password")) {
+        resetField("password");
+        return setError("password", { message: "Password is incorrect" });
       }
+
+      return toast.error("An error occurred during login", {
+        autoClose: 2000,
+        position: "bottom-right",
+        theme: "colored",
+      });
     }
   };
 
@@ -82,7 +79,7 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <div className="bg-white rounded-b-md shadow-lg p-8 backdrop-blur-sm bg-opacity-90 w-full h-dvh md:h-fit ">
+        <div className="bg-white rounded-b-md shadow-lg p-8 backdrop-blur-sm bg-opacity-90 w-full h-dvh md:h-fit">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
             <p className="text-gray-600 mt-2">Sign in to access your account</p>
@@ -97,6 +94,7 @@ const Login = () => {
               label={{ content: "Username" }}
               type="text"
               required={true}
+              autoFocus
             />
 
             <Input
@@ -113,7 +111,7 @@ const Login = () => {
               <Button
                 type="submit"
                 activeText="Login"
-                disableText="Login..."
+                disableText="Logging in..."
                 isLoading={isSubmitting}
                 disabled={isSubmitting}
               />

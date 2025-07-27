@@ -90,6 +90,7 @@ const Register = () => {
                 errors={errors}
                 label={{ content: "First Name" }}
                 required
+                autoFocus
               />
               <Input
                 id="lastName-input"

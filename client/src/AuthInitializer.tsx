@@ -17,9 +17,11 @@ export function AuthInitializer() {
             "Content-Type": "application/json",
           },
         });
-        console.log("Fetched user:", response);
+        console.log("Fetched user:", response.data.data.username);
 
-        setUser(response.data.data);
+        setUser({
+          username: response.data.data.username,
+        });
       } catch (error) {
         console.error("Failed to fetch user:", error);
         setUser(null);

@@ -11,6 +11,7 @@ import Button from "../ui/Button";
 import useAxios from "../../hooks/useAxios";
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 type Props = {
   setAddNewPopup: (x: boolean) => void;
@@ -75,6 +76,20 @@ const CreateIssue = ({ setAddNewPopup }: Props) => {
     },
   });
 
+  useEffect(() => {
+    const clickEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setAddNewPopup(false);
+      }
+    };
+
+    document.addEventListener("keydown", clickEsc);
+
+    return () => {
+      document.removeEventListener("keydown", clickEsc);
+    };
+  }, []);
+
   return (
     <PopUp
       title="Create Issue"
@@ -94,6 +109,7 @@ const CreateIssue = ({ setAddNewPopup }: Props) => {
               errors={errors}
               label={{ content: "Title" }}
               required
+              autoFocus
             />
             <Input
               id="description-input-issue-creation"

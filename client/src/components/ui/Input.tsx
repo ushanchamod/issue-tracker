@@ -19,6 +19,7 @@ type InputProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
   errors?: FieldErrors<T>;
   required?: boolean;
+  autoFocus?: boolean;
 };
 
 /**
@@ -38,6 +39,7 @@ type InputProps<T extends FieldValues> = {
  * @param {UseFormRegister<T>} register - React Hook Form's register function.
  * @param {FieldErrors<T>} [errors] - Validation errors object from react-hook-form.
  * @param {boolean} [required] - Whether the input is required; adds a red asterisk if true.
+ * @param {boolean} [autoFocus] - Whether the input is autoFocus;
  *
  * @returns {JSX.Element} A styled input field with label, password toggle, and error display.
  */
@@ -51,6 +53,7 @@ const Input = <T extends FieldValues>({
   register,
   errors = {},
   required,
+  autoFocus,
 }: InputProps<T>) => {
   console.log("rerender", name);
 
@@ -75,6 +78,7 @@ const Input = <T extends FieldValues>({
       <div className="relative">
         <input
           id={id}
+          autoFocus={autoFocus}
           type={inputType}
           {...register(name)}
           placeholder={placeholder}
