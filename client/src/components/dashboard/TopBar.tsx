@@ -1,10 +1,9 @@
 import { LogOut, User } from "lucide-react";
 import { useAuthStore } from "../../stores/useAuthStore";
-// import { Link } from "react-router-dom"; // Keep your original import
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 const TopBar = () => {
   const { fetchData } = useAxios();
@@ -35,49 +34,40 @@ const TopBar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 fixed top-0 left-0 w-full z-50 backdrop-blur-sm bg-white/95">
-      <div className="flex items-center">
-        <h1 className="text-xl font-bold text-gray-900 tracking-tight">
-          IssueTracker
-        </h1>
-      </div>
-
+    <div className="flex flex-row items-center justify-between p-3 px-7 bg-gray-900 fixed top-0 left-0 w-full z-2">
+      <p className="hidden sm:flex text-white text-lg font-medium">I Tracker</p>
+      <p className="flex sm:hidden text-white text-lg font-medium">I Tracker</p>
       <div
-        className="relative"
+        className="flex items-center gap-3 cursor-pointer relative"
         onMouseEnter={() => setToggleMenu(true)}
         onMouseLeave={() => setToggleMenu(false)}
       >
-        <div className="flex items-center gap-3 cursor-pointer group">
-          <div className="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-gray-50">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <User className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-sm font-medium text-gray-700 capitalize">
-              {user?.username}
-            </span>
-          </div>
-        </div>
-
+        <User color="#fff" size={22} />
+        <span className="text-white font-semibold uppercase">
+          {user?.username}
+        </span>
         {toggleMenu && (
-          <div className="absolute top-full right-0 mt-2 w-48 animate-in fade-in slide-in-from-top-2 duration-200">
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="p-1">
-                <Link
-                  to=""
-                  className="flex items-center gap-3 px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-150"
-                >
-                  <User className="w-4 h-4 text-gray-500" />
-                  <span className="font-medium">Profile</span>
-                </Link>
+          <div className="absolute top-4 right-0 ">
+            <div className="mt-1 p-2 bg-gray-800">
+              <Link
+                to={""}
+                className="flex items-center justify-start gap-2 p-2 px-4 mb-0.5 hover:bg-gray-600 rounded-sm"
+              >
+                <User color="#fff" size={18} />
+                <span className="text-white font-semibold text-[14px]">
+                  Profile
+                </span>
+              </Link>
 
-                <button
-                  className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-150"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span className="font-medium">Logout</span>
-                </button>
-              </div>
+              <button
+                className="flex items-center justify-start gap-2 p-2 px-4 hover:bg-red-600 rounded-sm"
+                onClick={handleLogout}
+              >
+                <LogOut color="#fff" size={18} />
+                <span className="text-white font-semibold text-[14px]">
+                  Logout
+                </span>
+              </button>
             </div>
           </div>
         )}
