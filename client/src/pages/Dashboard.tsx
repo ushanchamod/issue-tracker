@@ -65,7 +65,7 @@ const Dashboard = () => {
       <TopBar />
       {addNewPopup && <CreateIssue setAddNewPopup={setAddNewPopup} />}
 
-      <div className="h-full overflow-auto mt-12">
+      <div className="h-full overflow-auto mt-14">
         <div className="p-6 max-w-[1500px] mx-auto">
           <div className="font-bold mb-4 bg-white px-5 py-5 rounded-sm border border-gray-200 shadow w-full">
             <div className="flex sm:hidden justify-between items-center">
