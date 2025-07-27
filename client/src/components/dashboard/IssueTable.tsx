@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import { toast } from "react-toastify";
 import Button from "../ui/Button";
-import { Edit, Edit2, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { EditDescription, EditTitle } from "./EditField";
 
 export type TableDataType = {
