@@ -187,20 +187,20 @@ const IssueTable = ({ data, popup }: Props) => {
               {
                 value: "low",
                 label: "Low",
-                color: "#FEF9C3", // Tailwind: yellow-100
-                textColor: "#92400E", // Tailwind: yellow-800
+                color: "#fff",
+                textColor: "#000",
               },
               {
                 value: "medium",
                 label: "Medium",
-                color: "#CFFAFE", // Tailwind: cyan-100
-                textColor: "#155E75", // Tailwind: cyan-800
+                color: "#fff",
+                textColor: "#000",
               },
               {
                 value: "high",
                 label: "High",
-                color: "#FECACA", // Tailwind: red-200
-                textColor: "#991B1B", // Tailwind: red-800
+                color: "#fff",
+                textColor: "#000",
               },
             ]}
           />
@@ -230,20 +230,20 @@ const IssueTable = ({ data, popup }: Props) => {
               {
                 value: "low",
                 label: "Low",
-                color: "#DCFCE7", // Tailwind: green-100
-                textColor: "#166534", // Tailwind: green-800
+                color: "#fff",
+                textColor: "#000",
               },
               {
                 value: "normal",
                 label: "Normal",
-                color: "#E0F2FE", // Tailwind: blue-100
-                textColor: "#1E3A8A", // Tailwind: blue-800
+                color: "#fff",
+                textColor: "#000",
               },
               {
                 value: "high",
                 label: "High",
-                color: "#FECACA", // Tailwind: red-200
-                textColor: "#991B1B", // Tailwind: red-800
+                color: "#fff",
+                textColor: "#000",
               },
             ]}
           />
@@ -273,32 +273,32 @@ const IssueTable = ({ data, popup }: Props) => {
               {
                 value: "open",
                 label: "Open",
-                color: "#FEF9C3", // Tailwind: yellow-100
-                textColor: "#92400E", // Tailwind: yellow-800
+                color: "#F59E0B", // vibrant amber
+                textColor: "#FFFFFF", // white for contrast
               },
               {
                 value: "in-progress",
                 label: "In Progress",
-                color: "#CFFAFE", // Tailwind: cyan-100
-                textColor: "#155E75", // Tailwind: cyan-800
+                color: "#2563EB", // rich blue
+                textColor: "#FFFFFF",
               },
               {
                 value: "testing",
                 label: "Testing",
-                color: "#E0E7FF", // Tailwind: indigo-100
-                textColor: "#3730A3", // Tailwind: indigo-800
+                color: "#7C3AED", // deep purple
+                textColor: "#FFFFFF",
               },
               {
                 value: "resolved",
                 label: "Resolved",
-                color: "#D1FAE5", // Tailwind: green-100
-                textColor: "#065F46", // Tailwind: green-800
+                color: "#16A34A", // lush green
+                textColor: "#FFFFFF",
               },
               {
                 value: "closed",
                 label: "Closed",
-                color: "#F3F4F6", // Tailwind: gray-100
-                textColor: "#374151", // Tailwind: gray-700
+                color: "#4B5563", // dark gray
+                textColor: "#FFFFFF",
               },
             ]}
           />

@@ -50,7 +50,7 @@ export const EditTitle = ({ row, mutate }: Props) => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="flex-grow px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
+              className="flex-grow px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 transition w-full"
               autoFocus
             />
             <button
@@ -63,10 +63,10 @@ export const EditTitle = ({ row, mutate }: Props) => {
             </button>
             <button
               type="submit"
-              className="p-1 hover:bg-blue-100 rounded-md transition"
+              className="p-1 hover:bg-gray-100 rounded-md transition"
               title="Save"
             >
-              <Save size={18} className="text-blue-600" />
+              <Save size={18} className="text-gray-600" />
             </button>
           </motion.form>
         ) : (
@@ -119,7 +119,7 @@ export const EditDescription = ({ row, mutate }: Props) => {
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="flex-grow px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full"
+              className="flex-grow px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 transition w-full"
               autoFocus
             />
             <button
@@ -132,10 +132,10 @@ export const EditDescription = ({ row, mutate }: Props) => {
             </button>
             <button
               type="submit"
-              className="p-1 hover:bg-blue-100 rounded-md transition"
+              className="p-1 hover:bg-gray-100 rounded-md transition"
               title="Save"
             >
-              <Save size={18} className="text-blue-600" />
+              <Save size={18} className="text-gray-600" />
             </button>
           </motion.form>
         ) : (
