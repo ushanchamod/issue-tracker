@@ -21,7 +21,7 @@ interface BasicTableProps {
   borderHidden?: boolean;
   onlyBottomBorder?: boolean;
   fontSize?: string;
-  rawHeight?: string;
+  rowHeight?: string;
   firstRowColor?: string | null;
   loading?: boolean;
   popup: (x: boolean) => void;
@@ -34,7 +34,7 @@ const Table: React.FC<BasicTableProps> = ({
   borderHidden = false,
   onlyBottomBorder = false,
   fontSize,
-  rawHeight,
+  rowHeight,
   firstRowColor = null,
   loading,
   popup,
@@ -63,7 +63,7 @@ const Table: React.FC<BasicTableProps> = ({
                       textAlign: header.align,
                       backgroundColor: headerColor,
                       fontSize: fontSize ? fontSize : "16px",
-                      height: rawHeight ? rawHeight : "auto",
+                      height: rowHeight ? rowHeight : "auto",
                       width: header.width ? header.width : "auto",
                     }}
                   >
@@ -86,7 +86,7 @@ const Table: React.FC<BasicTableProps> = ({
                     row={row}
                     headers={headers}
                     fontSize={fontSize}
-                    rawHeight={rawHeight}
+                    rowHeight={rowHeight}
                     firstRowColor={
                       firstRowColor && index === 0 ? firstRowColor : null
                     }
@@ -129,7 +129,7 @@ interface RowProps {
   borderHidden: boolean;
   onlyBottomBorder: boolean;
   fontSize?: string;
-  rawHeight?: string;
+  rowHeight?: string;
   firstRowColor?: string | null;
 }
 
@@ -139,7 +139,7 @@ const Row: React.FC<RowProps> = ({
   borderHidden,
   onlyBottomBorder,
   fontSize,
-  rawHeight,
+  rowHeight,
   firstRowColor = null,
 }) => {
   return (
@@ -163,7 +163,7 @@ const Row: React.FC<RowProps> = ({
             `}
             style={{
               fontSize,
-              height: rawHeight || "auto",
+              height: rowHeight || "auto",
               background: firstRowColor || undefined,
               maxWidth: header.width,
               width: header.width,

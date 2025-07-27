@@ -4,7 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import { toast } from "react-toastify";
 import Button from "../ui/Button";
-import { Trash2 } from "lucide-react";
+import { Edit, Edit2, Trash2 } from "lucide-react";
+import { EditDescription, EditTitle } from "./EditField";
 
 export type TableDataType = {
   _id: string;
@@ -129,8 +130,8 @@ const IssueTable = ({ data, popup }: Props) => {
       align: "left",
       bold: 700,
       width: "200px",
-      element: (raw: TableDataType) => {
-        return <span># {raw.issueId}</span>;
+      element: (row: TableDataType) => {
+        return <span># {row.issueId}</span>;
       },
     },
     {
@@ -138,14 +139,20 @@ const IssueTable = ({ data, popup }: Props) => {
       title: "Title",
       align: "left",
       bold: 700,
-      width: "200px",
+      width: "600px",
+      element: (row: TableDataType) => {
+        return <EditTitle row={row} mutate={mutate} />;
+      },
     },
     {
       key: "description",
       title: "Description",
       align: "left",
       bold: 700,
-      width: "400px",
+      width: "900px",
+      element: (row: TableDataType) => {
+        return <EditDescription row={row} mutate={mutate} />;
+      },
     },
     {
       key: "createdAt",
@@ -153,8 +160,8 @@ const IssueTable = ({ data, popup }: Props) => {
       align: "left",
       bold: 700,
       width: "200px",
-      element: (raw: TableDataType) => {
-        return new Date(raw.createdAt).toDateString();
+      element: (row: TableDataType) => {
+        return new Date(row.createdAt).toDateString();
       },
     },
     {
@@ -163,15 +170,15 @@ const IssueTable = ({ data, popup }: Props) => {
       align: "center",
       bold: 700,
       width: "200px",
-      element: (raw: TableDataType) => {
+      element: (row: TableDataType) => {
         return (
           <Select
             name="severity"
             id="severity-select"
-            value={raw.severity}
+            value={row.severity}
             onChange={(e) =>
               mutate({
-                row: raw,
+                row: row,
                 value: e.target.value,
                 whichOption: "severity",
               })
@@ -206,15 +213,15 @@ const IssueTable = ({ data, popup }: Props) => {
       align: "center",
       bold: 700,
       width: "200px",
-      element: (raw: TableDataType) => {
+      element: (row: TableDataType) => {
         return (
           <Select
             name="priority"
             id="priority-select"
-            value={raw.priority}
+            value={row.priority}
             onChange={(e) =>
               mutate({
-                row: raw,
+                row: row,
                 value: e.target.value,
                 whichOption: "priority",
               })
@@ -249,15 +256,15 @@ const IssueTable = ({ data, popup }: Props) => {
       align: "center",
       bold: 700,
       width: "200px",
-      element: (raw: TableDataType) => {
+      element: (row: TableDataType) => {
         return (
           <Select
             name="status"
             id="status-select"
-            value={raw.status}
+            value={row.status}
             onChange={(e) =>
               mutate({
-                row: raw,
+                row: row,
                 value: e.target.value,
                 whichOption: "status",
               })
@@ -305,7 +312,7 @@ const IssueTable = ({ data, popup }: Props) => {
       align: "center",
       bold: 700,
       width: "200px",
-      element: (raw: TableDataType) => {
+      element: (row: TableDataType) => {
         return (
           <div className="flex justify-center align-middle w-full">
             <Button
@@ -313,7 +320,7 @@ const IssueTable = ({ data, popup }: Props) => {
               activeText="Delete"
               disableText="Deleting..."
               isLoading={false}
-              onClick={() => _delete(raw._id)}
+              onClick={() => _delete(row._id)}
               className="bg-red-400 px-4 py-1.5 text-white rounded-md cursor-pointer hover:bg-red-500"
             />
           </div>
@@ -330,7 +337,7 @@ const IssueTable = ({ data, popup }: Props) => {
         headerColor="#f8f9fa"
         borderHidden={false}
         fontSize="14px"
-        rawHeight="50px"
+        rowHeight="50px"
         firstRowColor="#f8f9fa"
         loading={isPending || _pending}
         popup={popup}
