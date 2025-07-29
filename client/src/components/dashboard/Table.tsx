@@ -42,8 +42,6 @@ const Table: React.FC<BasicTableProps> = ({
 }) => {
   // const isMobile = useMediaQuery("(max-width: 768px)");
 
-  if (loading) return <Loading />;
-
   if (rows.length === 0) {
     return (
       <div className="py-12 text-center">
@@ -70,6 +68,7 @@ const Table: React.FC<BasicTableProps> = ({
     <>
       {/* desktop */}
       <table className="w-full h-fit border-collapse relative hidden lg:block">
+        {loading && <Loading />}
         <thead>
           <tr>
             {headers?.map((header, index) => {
@@ -123,6 +122,7 @@ const Table: React.FC<BasicTableProps> = ({
 
       {/* mobile */}
       <div className="space-y-4 p-2 block lg:hidden">
+        {loading && <Loading />}
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
