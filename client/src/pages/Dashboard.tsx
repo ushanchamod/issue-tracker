@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import TopBar from "../components/dashboard/TopBar";
 import useAxios from "../hooks/useAxios";
-import Loading from "../components/ui/Loading";
 import IssueTable from "../components/dashboard/IssueTable";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
@@ -97,11 +96,6 @@ const Dashboard = () => {
           </div>
 
           <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow relative ">
-            {/* {isFetching && (
-              <div className="absolute w-full h-full top-0 left-0 z-2">
-                <Loading />
-              </div>
-            )} */}
             <IssueTable
               data={data?.issues || []}
               popup={setAddNewPopup}
