@@ -97,12 +97,16 @@ const Dashboard = () => {
           </div>
 
           <div className="overflow-hidden overflow-x-auto bg-white px-5 py-5 rounded-sm border border-gray-200 shadow relative ">
-            {isFetching && (
+            {/* {isFetching && (
               <div className="absolute w-full h-full top-0 left-0 z-2">
                 <Loading />
               </div>
-            )}
-            <IssueTable data={data?.issues || []} popup={setAddNewPopup} />
+            )} */}
+            <IssueTable
+              data={data?.issues || []}
+              popup={setAddNewPopup}
+              _loading={isFetching}
+            />
           </div>
 
           <div className="mt-4 text-sm text-gray-500 w-full flex justify-between align-middle h-fit">

@@ -2,7 +2,6 @@ import React from "react";
 import Loading from "../ui/Loading";
 import Button from "../ui/Button";
 import { Plus } from "lucide-react";
-// import { useMediaQuery } from "../../hooks/useMediaQuery"; // You'll need to create this hook
 
 export interface Header {
   key: string;
@@ -40,11 +39,10 @@ const Table: React.FC<BasicTableProps> = ({
   loading,
   popup,
 }) => {
-  // const isMobile = useMediaQuery("(max-width: 768px)");
-
   if (rows.length === 0) {
     return (
       <div className="py-12 text-center">
+        {loading && <Loading />}
         <div className="flex flex-col items-center justify-center space-y-4">
           <h3 className="text-xl font-medium text-gray-600">No issues found</h3>
           <p className="text-gray-500 max-w-md">
@@ -164,7 +162,6 @@ const Table: React.FC<BasicTableProps> = ({
   );
 };
 
-// Keep your existing Row component
 const Row: React.FC<any> = ({
   row,
   headers,

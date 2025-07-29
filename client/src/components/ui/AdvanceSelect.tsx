@@ -92,7 +92,7 @@ const AdvancedSelect = <T extends FieldValues>({
           id={id}
           {...register(name)}
           disabled={disabled}
-          className={`w-full px-4 py-3 rounded-lg border appearance-none ${
+          className={`w-full px-4 py-2.5 rounded-lg border appearance-none ${
             error
               ? "border-red-500 focus:border-red-500"
               : "border-gray-300 focus:border-gray-500"

@@ -16,7 +16,7 @@ type LoadingProps = {
  */
 const Loading = ({ size = 48 }: LoadingProps) => {
   return (
-    <div className="absolute top-0 inset-0 z-50 flex items-center justify-center backdrop-blur-xs bg-white/40">
+    <div className="absolute top-0 inset-0 z-50 flex items-center justify-center backdrop-blur-xs bg-white/10">
       <motion.div
         className="border-4 border-b-gray-700 border-t-transparent rounded-full animate-spin"
         style={{ width: size, height: size }}
@@ -25,7 +25,7 @@ const Loading = ({ size = 48 }: LoadingProps) => {
         transition={{
           repeat: Infinity,
           duration: 1,
-          ease: "linear",
+          ease: "easeInOut",
         }}
       />
     </div>

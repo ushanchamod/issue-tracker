@@ -32,10 +32,11 @@ export type TableHeaderType = {
 
 type Props = {
   data: TableDataType[];
+  _loading: boolean;
   popup: (x: boolean) => void;
 };
 
-const IssueTable = ({ data, popup }: Props) => {
+const IssueTable = ({ data, popup, _loading }: Props) => {
   const { fetchData } = useAxios();
   const queryClient = useQueryClient();
 
@@ -339,7 +340,7 @@ const IssueTable = ({ data, popup }: Props) => {
         fontSize="14px"
         rowHeight="50px"
         firstRowColor="#f8f9fa"
-        loading={isPending || _pending}
+        loading={isPending || _pending || _loading}
         popup={popup}
       />
     </>

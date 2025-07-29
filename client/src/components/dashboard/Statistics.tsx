@@ -13,11 +13,18 @@ import {
 type StackCardProps = {
   label: string;
   count: number;
+  totalIssue: number;
   color: string;
   icon?: React.ReactNode;
 };
 
-const StackCard = ({ label, count, color, icon }: StackCardProps) => {
+const StackCard = ({
+  label,
+  count,
+  color,
+  icon,
+  totalIssue,
+}: StackCardProps) => {
   return (
     <div className="w-full bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:border-gray-300 group">
       <div className="flex flex-col gap-3">
@@ -41,7 +48,7 @@ const StackCard = ({ label, count, color, icon }: StackCardProps) => {
           <div
             className="h-full transition-all duration-500"
             style={{
-              width: `${Math.min(100, (count / 50) * 100)}%`,
+              width: `${Math.min(100, (count / totalIssue) * 100)}%`,
               backgroundColor: color,
             }}
           />
@@ -113,7 +120,10 @@ const CombinedStatCard = ({ data }: { data: any }) => {
               <div
                 className="h-full"
                 style={{
-                  width: `${Math.min(100, ((data?.[key] || 0) / 50) * 100)}%`,
+                  width: `${Math.min(
+                    100,
+                    ((data?.[key] || 0) / data?.total) * 100
+                  )}%`,
                   backgroundColor: color,
                 }}
               />
@@ -208,6 +218,7 @@ const Statistics = () => {
             count={data?.[key] || 0}
             color={color}
             icon={icon}
+            totalIssue={data?.total}
           />
         ))}
       </div>

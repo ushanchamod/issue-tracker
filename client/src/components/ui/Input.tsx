@@ -82,7 +82,7 @@ const Input = <T extends FieldValues>({
           type={inputType}
           {...register(name)}
           placeholder={placeholder}
-          className={`w-full px-4 py-3 rounded-lg border ${
+          className={`w-full px-4 py-2.5 rounded-lg border ${
             error
               ? "border-red-500 focus:border-red-500"
               : "border-gray-300 focus:border-gray-500"
