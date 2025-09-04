@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { errorHandler } from "./middlewares";
 import cookieParser from "cookie-parser";
-import { issueRouter, userRouter } from "./routes";
+import { AiRouter, issueRouter, userRouter } from "./routes";
 import bodyParser from "body-parser";
 import cors from "cors";
 import config from "./config/config";
@@ -29,6 +29,7 @@ app.options("/{*any}", (req: Request, res: Response) => res.status(200).send());
 
 app.use("/api/issue", issueRouter);
 app.use("/api/user", userRouter);
+app.use("/api/ai", AiRouter);
 
 app.use(errorHandler);
 

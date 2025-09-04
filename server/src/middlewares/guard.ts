@@ -8,6 +8,11 @@ export interface AuthenticatedRequest extends Request {
   user?: any; // Define the user type as needed
 }
 
+export interface AiAuthenticatedRequest extends Request {
+  user?: any; // Define the user type as needed
+  token?: string;
+}
+
 export const useGuard = (
   req: AuthenticatedRequest,
   res: Response,
@@ -57,5 +62,30 @@ export const isAuthorizedToAccessIssue = async (
     next();
   } catch (error) {
     return sendError(res, "Failed to authorize access", 500);
+  }
+};
+
+// AI
+export const AiGuard = (
+  req: AiAuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  if (token) {
+    try {
+      if (!config.JWT_SECRET) {
+        return sendError(res, "JWT secret is not configured", 500);
+      }
+      const decoded = jwt.verify(token, config.JWT_SECRET as string);
+      req.user = decoded;
+      req.token = token;
+      next();
+    } catch (error) {
+      next();
+    }
+  } else {
+    next();
   }
 };

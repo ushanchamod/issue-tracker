@@ -9,7 +9,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Routers />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
       <ToastContainer />
     </QueryClientProvider>
   );
