@@ -2,7 +2,7 @@ import axios from "axios";
 
 export type AIRequestSecure = {
   message: string;
-  userId: string;
+  userId: string | null;
   authToken: string; // Add authToken
 };
 

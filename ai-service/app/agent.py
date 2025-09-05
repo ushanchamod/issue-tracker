@@ -18,7 +18,10 @@ class AgentState(TypedDict):
     auth_token: Optional[str]  # Store the auth token for the user
 
 # ---- LLM ----
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(
+    model="gpt-3.5-turbo", 
+    temperature=0
+)
 
 # ---- Tools ----
 search_tool = DuckDuckGoSearchRun(
@@ -49,7 +52,7 @@ def fetch_issue_by_user_id_func(state: AgentState) -> dict:
         return {"error": "To fetch issues, user should be logged in."}
 
     try:
-        url = "http://localhost:8080/api/user/my-issues"
+        url = "http://localhost:3000/api/user/my-issues"
         response = requests.get(
             url,
             headers={

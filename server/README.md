@@ -115,6 +115,7 @@ GET /api/user/my-issues?field=&severity=&priority=&status=&page=1
    JWT_SECRET=your_jwt_secret
    CORS_ORIGIN=client_url
    NODE_ENV=development_or_production
+   AI_SERVICE_URL=your_ai_service_url
    ```
 
 3. **Run in development mode:**

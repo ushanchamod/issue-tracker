@@ -22,6 +22,7 @@ const MarkdownRenderer: React.FC<{ content: string }> = memo(({ content }) => {
 
     // Code blocks with language detection and copy button
     html = html.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
+      console.log("Rendering code block:", { lang, code, match });
       const codeId = Math.random().toString(36).substr(2, 9);
       const language = lang || "text";
       const trimmedCode = code.trim();
@@ -249,161 +250,179 @@ const ChatUI: React.FC = () => {
           </motion.button>
         ) : (
           <motion.div
-            key="chat-window"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: "spring", duration: 0.3 }}
-            className="bg-white rounded-xl shadow-2xl w-[28rem] h-[36rem] flex flex-col border border-gray-200 overflow-hidden"
+            className="chat-ui fixed top-0 left-0 bg-gray-900/50 w-[100vw] h-[100dvh] flex items-center justify-center md:items-end md:justify-end p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                  <MessageCircle className="h-4 w-4 text-white" />
+            <motion.div
+              key="chat-window"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.3 }}
+              className="bg-white rounded-xl shadow-2xl w-[28rem] h-[36rem] flex flex-col border border-gray-200 overflow-hidden"
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                    <MessageCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-gray-800">
+                      AI Assistant
+                    </span>
+                    <div className="text-xs text-gray-500 flex items-center">
+                      <motion.span className="inline-block w-1.5 h-1.5 mr-1 bg-green-500 rounded-full animate-pulse"></motion.span>
+                      Online
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-sm font-semibold text-gray-800">
-                    AI Assistant
-                  </span>
-                  <div className="text-xs text-gray-500">Online</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                {messages.length > 0 && (
+                <div className="flex items-center gap-2">
+                  {messages.length > 0 && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={clearChat}
+                      className="text-gray-400 hover:text-gray-600 transition-colors text-xs px-2 py-1 rounded"
+                      title="Clear chat"
+                    >
+                      Clear
+                    </motion.button>
+                  )}
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={clearChat}
-                    className="text-gray-400 hover:text-gray-600 transition-colors text-xs px-2 py-1 rounded"
-                    title="Clear chat"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
                   >
-                    Clear
+                    <X className="h-5 w-5" />
                   </motion.button>
-                )}
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsOpen(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <X className="h-5 w-5" />
-                </motion.button>
-              </div>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50">
-              {messages.length === 0 && (
-                <div className="text-center text-gray-500 text-sm mt-16">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <MessageCircle className="h-8 w-8 text-blue-500" />
-                  </div>
-                  <div className="font-medium mb-1">Welcome to AI Chat!</div>
-                  <div className="text-xs">
-                    Ask me anything with markdown support
-                  </div>
                 </div>
-              )}
+              </div>
 
-              <AnimatePresence>
-                {messages.map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className={`flex ${
-                      msg.sender === "user" ? "justify-end" : "justify-start"
-                    }`}
-                  >
-                    <div
-                      className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-sm ${
-                        msg.sender === "user"
-                          ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white"
-                          : "bg-white text-gray-800 border border-gray-200"
+              {/* Messages */}
+              <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50">
+                {messages.length === 0 && (
+                  <div className="text-center text-gray-500 text-sm mt-16">
+                    <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <MessageCircle className="h-8 w-8 text-blue-500" />
+                    </div>
+                    <div className="font-medium mb-1">Welcome to AI Chat!</div>
+                    <div className="text-xs">
+                      Ask me anything with markdown support
+                    </div>
+                  </div>
+                )}
+
+                <AnimatePresence>
+                  {messages.map((msg) => (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className={`flex ${
+                        msg.sender === "user" ? "justify-end" : "justify-start"
                       }`}
                     >
-                      {msg.sender === "bot" ? (
-                        <MarkdownRenderer content={msg.text} />
-                      ) : (
-                        <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                          {msg.text}
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-
-                {isTyping && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="flex justify-start"
-                  >
-                    <div className="bg-white px-4 py-3 rounded-2xl max-w-[80%] border border-gray-200 shadow-sm">
-                      <div className="flex items-center space-x-2">
-                        <div className="flex space-x-1">
-                          {[0, 1, 2].map((i) => (
-                            <motion.div
-                              key={i}
-                              animate={{
-                                scale: [1, 1.2, 1],
-                                opacity: [0.5, 1, 0.5],
-                              }}
-                              transition={{
-                                duration: 1,
-                                repeat: Infinity,
-                                delay: i * 0.2,
-                              }}
-                              className="w-2 h-2 bg-blue-500 rounded-full"
-                            />
-                          ))}
-                        </div>
-                        <span className="text-xs text-gray-500">
-                          AI is typing...
-                        </span>
+                      <div
+                        className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-sm ${
+                          msg.sender === "user"
+                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white"
+                            : "bg-white text-gray-800 border border-gray-200"
+                        }`}
+                      >
+                        {msg.sender === "bot" ? (
+                          <MarkdownRenderer content={msg.text} />
+                        ) : (
+                          <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                            {msg.text}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              <div ref={messagesEndRef} />
-            </div>
+                    </motion.div>
+                  ))}
 
-            {/* Input */}
-            <div className="p-4 border-t border-gray-200 bg-white">
-              <div className="flex space-x-3">
-                <input
-                  autoFocus
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder-gray-500 text-sm"
-                  placeholder="Type your message... (Shift+Enter for new line)"
-                  disabled={isTyping}
-                />
-                <motion.button
-                  onClick={handleSendMessage}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  disabled={!input.trim() || isTyping}
-                  className={`px-4 py-3 rounded-xl transition-all duration-200 ${
-                    input.trim() && !isTyping
-                      ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg"
-                      : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  }`}
-                >
-                  <Send className="h-4 w-4" />
-                </motion.button>
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="flex justify-start"
+                    >
+                      <div className="bg-white px-4 py-3 rounded-2xl max-w-[80%] border border-gray-200 shadow-sm">
+                        <div className="flex items-center space-x-2">
+                          <div className="flex space-x-1">
+                            {[0, 1, 2].map((i) => (
+                              <motion.div
+                                key={i}
+                                animate={{
+                                  scale: [1, 1.2, 1],
+                                  opacity: [0.5, 1, 0.5],
+                                }}
+                                transition={{
+                                  duration: 1,
+                                  repeat: Infinity,
+                                  delay: i * 0.2,
+                                }}
+                                className="w-2 h-2 bg-blue-500 rounded-full"
+                              />
+                            ))}
+                          </div>
+                          <span className="text-xs text-gray-500">
+                            AI is typing...
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <div ref={messagesEndRef} />
               </div>
-              <div className="text-xs text-gray-400 mt-2 text-center">
-                Supports **bold**, *italic*, `code`, lists, and more!
+
+              {/* Input */}
+              <div className="p-4 border-t border-gray-200 bg-white">
+                <div className="flex space-x-3">
+                  <input
+                    autoFocus
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder-gray-500 text-sm"
+                    placeholder="Type your message... (Shift+Enter for new line)"
+                    disabled={isTyping}
+                  />
+                  <motion.button
+                    onClick={handleSendMessage}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    disabled={!input.trim() || isTyping}
+                    className={`px-4 py-3 rounded-xl transition-all duration-200 ${
+                      input.trim() && !isTyping
+                        ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg"
+                        : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    }`}
+                  >
+                    <Send className="h-4 w-4" />
+                  </motion.button>
+                </div>
+                <div className="text-xs text-gray-400 mt-2 text-center">
+                  Powered by UshanAI{" "}
+                  <a
+                    href="https://ushan.me"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-gray-600"
+                  >
+                    ushan.me
+                  </a>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
